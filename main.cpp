@@ -2,9 +2,9 @@
 #include "ThreeBody.h"
 
 int main() {
-    Body body1 = {5.972e24, {1e11, 0, 0}, {0, 30000, 0}}; // Earth
-    Body body2 = {7.348e22, {1e11 + 384400000, 0, 0}, {0, 30000 + 1022, 0}}; // Moon
-    Body body3 = {1.989e30, {0, 0, 0}, {0, 0, 0}}; // Sun
+    Body body1 = {5.972e28, {1e11, -1e11, -1e11}, {0, 1000, 1000}};
+    Body body2 = {7.348e28, {0, 1e11, 0}, {0, -1000, 0}};
+    Body body3 = {1.989e30, {-1e11, 0, 1e11}, {10000, -1000, 0}};
 
     ThreeBody threeBody = {body1, body2, body3};
     double dt = 86400; // 1 day time step
