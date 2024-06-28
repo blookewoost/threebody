@@ -7,7 +7,7 @@ int main() {
     Body body3 = {1.989e30, {0, 0, 0}, {0, 0, 0}}; // Sun
 
     ThreeBody threeBody = {body1, body2, body3};
-    double dt = 60; // 1 minute time step
+    double dt = 86400; // 1 day time step
     ThreeBodySimulation sim(threeBody, dt, "three_body_simulation.csv");
 
     for (int i = 0; i < 1000; ++i) {
