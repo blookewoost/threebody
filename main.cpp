@@ -8,7 +8,7 @@ int main() {
 
     ThreeBody threeBody = {body1, body2, body3};
     double dt = 60; // 1 minute time step
-    ThreeBodySimulation sim(threeBody, dt);
+    ThreeBodySimulation sim(threeBody, dt, "three_body_simulation.csv");
 
     for (int i = 0; i < 1000; ++i) {
         sim.update();

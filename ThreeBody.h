@@ -2,6 +2,7 @@
 #define THREE_BODY_H
 
 #include <array>
+#include <fstream>
 
 struct Body {
     double mass;
@@ -18,13 +19,17 @@ struct ThreeBody {
 
 class ThreeBodySimulation {
 public:
-    ThreeBodySimulation(const ThreeBody& threeBody, double dt);
+    ThreeBodySimulation(const ThreeBody& threeBody, double dt, const std::string& filename);
+    ~ThreeBodySimulation();
     void update();
     void printPositions() const;
+    const ThreeBody& getBodies() const;
+    void writeToCSV(double time) const;
 
 private:
     double dt; // initial time step
     ThreeBody bodies;
+    mutable std::ofstream outputFile;
     void computeForces();
     void rungeKuttaFehlbergStep();
 };

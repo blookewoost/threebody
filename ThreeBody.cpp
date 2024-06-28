@@ -1,11 +1,23 @@
 #include <iostream>
+#include <iomanip>
 #include <cmath>
 #include "ThreeBody.h"
 
 const double G = 6.67430e-11; // gravitational constant
 
-ThreeBodySimulation::ThreeBodySimulation(const ThreeBody& threeBody, double dt)
-    : bodies(threeBody), dt(dt) {}
+ThreeBodySimulation::ThreeBodySimulation(const ThreeBody& threeBody, double dt, const std::string& filename)
+    : bodies(threeBody), dt(dt), outputFile(filename) {
+    if (!outputFile.is_open()) {
+        throw std::runtime_error("Could not open file for writing");
+    }
+    outputFile << "time,body1_x,body1_y,body1_z,body2_x,body2_y,body2_z,body3_x,body3_y,body3_z\n";
+}
+
+ThreeBodySimulation::~ThreeBodySimulation() {
+    if (outputFile.is_open()) {
+        outputFile.close();
+    }
+}
 
 void ThreeBodySimulation::computeForces() {
     // Reset accelerations to zero
@@ -108,11 +120,25 @@ void ThreeBodySimulation::rungeKuttaFehlbergStep() {
 }
 
 void ThreeBodySimulation::update() {
+    static double time = 0;
     rungeKuttaFehlbergStep();
+    writeToCSV(time);
+    time += dt;
 }
 
 void ThreeBodySimulation::printPositions() const {
     std::cout << "Body 1 Position: (" << bodies.body1.position[0] << ", " << bodies.body1.position[1] << ", " << bodies.body1.position[2] << ")\n";
     std::cout << "Body 2 Position: (" << bodies.body2.position[0] << ", " << bodies.body2.position[1] << ", " << bodies.body2.position[2] << ")\n";
     std::cout << "Body 3 Position: (" << bodies.body3.position[0] << ", " << bodies.body3.position[1] << ", " << bodies.body3.position[2] << ")\n";
+}
+
+const ThreeBody& ThreeBodySimulation::getBodies() const {
+    return bodies;
+}
+
+void ThreeBodySimulation::writeToCSV(double time) const {
+    outputFile << std::fixed << std::setprecision(8) << time << ','
+               << bodies.body1.position[0] << ',' << bodies.body1.position[1] << ',' << bodies.body1.position[2] << ','
+               << bodies.body2.position[0] << ',' << bodies.body2.position[1] << ',' << bodies.body2.position[2] << ','
+               << bodies.body3.position[0] << ',' << bodies.body3.position[1] << ',' << bodies.body3.position[2] << '\n';
 }
