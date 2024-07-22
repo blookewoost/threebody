@@ -4,7 +4,7 @@ import matplotlib.animation as animation
 from mpl_toolkits.mplot3d import Axes3D
 
 # Read the CSV file
-df = pd.read_csv('three_body_simulation.csv')
+df = pd.read_csv('data/results.csv')
 
 # Extract time and positions
 time = df['time']
