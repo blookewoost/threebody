@@ -2,6 +2,8 @@
 #include <fstream>
 #include <sstream>
 #include <unordered_map>
+#include <cctype>
+#include <algorithm>
 
 
 // Parse the ini file and generate a map of the data.
@@ -17,6 +19,7 @@ std::unordered_map<std::string, std::string> read_ini(const std::string filename
         if (line[0] == '[' && line.back() == ']') {
             section = line.substr(1, line.size() - 2);
         } else {
+            line.erase(std::remove_if(line.begin(), line.end(), ::isspace), line.end());
             std::istringstream iss(line);
             std::string key, value;
             if(std::getline(iss, key, '=') && std::getline(iss, value)) { // parse out key value pairs

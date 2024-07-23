@@ -3,6 +3,7 @@ from tkinter import filedialog, messagebox
 import configparser
 import subprocess
 import os
+import stat
 
 
 '''
@@ -54,7 +55,7 @@ class Launcher:
         self.save_file()
         if os.path.isfile(self.runfile):
             try:
-                result = subprocess.run(["bash", self.runfile])
+                result = subprocess.run(["bash", self.runfile, self.filepath])
             except Exception as e:
                 print(e)
 
@@ -98,6 +99,10 @@ class Launcher:
 
         with open(self.filepath, 'w') as ini_file:
             self.config.write(ini_file)
+            ini_file.close()
+
+        # Ensure read permissions for the current user/group.
+        os.chmod(self.filepath, stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP | stat.S_IWGRP)
 
 if __name__ == "__main__":
     root = tk.Tk()

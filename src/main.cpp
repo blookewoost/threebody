@@ -4,7 +4,14 @@
 
 int main(int argc, char* argv[]) {
 
-    ThreeBody test = consume_ini("./data/ic.ini");
+    if (argc != 2) {
+        printf("Invalid arguments detected. Usage: ./threebody <filename>\n");
+        return 1;
+    }
+
+    const char* filename = argv[1];
+
+    ThreeBody test = consume_ini(filename);
     double dt = 86400; // 1 day time step
     ThreeBodySimulation sim(test, dt, "./data/results.csv");
 
