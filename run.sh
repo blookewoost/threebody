@@ -20,7 +20,6 @@ run_simulation() {
     fi
 }
 
-
 # main
 if [ -f "$BIN_PATH" ]; then
     run_simulation
