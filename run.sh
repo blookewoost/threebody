@@ -14,6 +14,7 @@ compile_simulation() {
 run_simulation() {
     echo -e "Running Three-Body-Problem Simulation..."
     "$BIN_PATH" $1
+    
     if [ -f "$DATA_FILE" ]; then
         echo -e "Complete!"
     else
@@ -28,7 +29,7 @@ if [ -f "$BIN_PATH" ]; then
     run_simulation $1
 else
     compile_simulation
-    run_simulation
+    run_simulation $1
 fi
 
 

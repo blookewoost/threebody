@@ -55,6 +55,7 @@ class Launcher:
         self.save_file()
         if os.path.isfile(self.runfile):
             try:
+                print(self.runfile, self.filepath)
                 result = subprocess.run(["bash", self.runfile, self.filepath])
             except Exception as e:
                 print(e)
